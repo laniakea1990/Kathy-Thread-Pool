@@ -1,30 +1,31 @@
 #include <stdio.h>
-#include "ks_thread_pool.h"
+#include "kathy_thread_pool.h"
 #include <unistd.h>
 
-void print()
+void *print(void *arg)
 {
-    printf("hello world!\n");
-}
-
-void printsome()
-{
-    printf("bitches! go fuck yourself\n");
+    pthread_t tid = pthread_self();
+    char c = *(char *)arg;
+    printf("thread %d is doing %c job\n", (int)tid, c);
+    sleep(1);
+    return (void *)0;
 }
 
 int main(void)
 {
-    ks_thread_pool_t *thread_pool;
-    thread_pool = ks_thread_pool_init(1);
+    kathy_thread_pool_t *thread_pool;
+    thread_pool = kathy_thread_pool_init(1);
+    int i;
+    char string[] = "111111111111111111111111111111111111";
 
-    printf("start\n");
-    if(ks_job_queue_add(thread_pool->job_queue, (void *)printsome) < 0)
+    for(i = 0; i<36; i++)
     {
-        fprintf(stderr, "ks_job_queue_add error\n");
-        return 0;
+        ktp_job_add(thread_pool, print, (void *)(string+i));
     }
-    printf("main add job\n");
-    thread_pool->job_num++;
-    sleep(3);
+
+    sleep(10);
+
+    kathy_thread_pool_destroy(thread_pool);
+
     return 1;
 }
