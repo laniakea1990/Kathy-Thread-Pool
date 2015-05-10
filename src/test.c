@@ -16,7 +16,7 @@ int main(void)
     kathy_thread_pool_t *thread_pool;
     thread_pool = kathy_thread_pool_init(1);
     int i;
-    char string[] = "111111111111111111111111111111111111";
+    char string[] = "1234567890qwertyuiopasdfghjklzxcvbnm";
 
     for(i = 0; i<36; i++)
     {
