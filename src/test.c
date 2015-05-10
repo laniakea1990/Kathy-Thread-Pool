@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "kathy_thread_pool.h"
-#include <unistd.h>
 
 void *print(void *arg)
 {
@@ -14,7 +13,7 @@ void *print(void *arg)
 int main(void)
 {
     kathy_thread_pool_t *thread_pool;
-    thread_pool = kathy_thread_pool_init(1);
+    thread_pool = kathy_thread_pool_init(5);
     int i;
     char string[] = "1234567890qwertyuiopasdfghjklzxcvbnm";
 
